@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #ff4d4d, #ffa64d, #ffdf4d);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: white;
+            text-align: center;
+        }
+        .contenedor {
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+            padding: 2em;
+            margin: 2em auto;
+            width: 80%;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 1em;
+            text-shadow: 2px 2px 5px #000;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        th, td {
+            padding: 1em;
+            border: 1px solid white;
+        }
+        th {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        td {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        tr:nth-child(even) td {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        button {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 0.5em 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ffa64d;
+        }
+        form {
+            display: inline;
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Lista de Productos</h1>
+        <button><a href="{{ url_for('agregar') }}">Agregar Producto</a></button>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Acciones</th>
+            </tr>
+            {% for producto in productos %}
+            <tr>
+                <td>{{ producto['id'] }}</td>
+                <td>{{ producto['descripcion'] }}</td>
+                <td>{{ producto['cantidad'] }}</td>
+                <td>{{ producto['precio'] }}</td>
+                <td>
+                    <button><a href="{{ url_for('editar', id=producto['id']) }}">Editar</a></button>
+                    <form action="{{ url_for('eliminar', id=producto['id']) }}" method="post">
+                        <button type="submit">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
